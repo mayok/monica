@@ -5,12 +5,16 @@ section.main
     div.body
       div.container
         div.box-container
-          div.box
-            i.i-pc
-            p foo
-            p foo
-          div.box
-            i.i-pc
-            p foo
-            p foo
+          = link_to '#' do
+            div.box
+              div.radial-progress(data-progress="0")
+                div.circle
+                  div.mask.full
+                    div.fill
+                  div.mask.half
+                    div.fill
+                    div.fill.fix
+                  div.shadow
+                div.inset
+                  div.percentage
 

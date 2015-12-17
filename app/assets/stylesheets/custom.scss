@@ -50,6 +50,19 @@ $header-bg: #383c3c;
 $header-font: #fff;
 $box: #1f4d7d;
 
+$circle-bg: #d6dadc;
+$circle-color: #97a71d;
+$circle-size: 120px;
+$transition-length: 1s;
+
+$inset-size: 90px;
+$inset-color: #fbfbfb;
+$inset-shadow: 6px 6px 10px rgba(0,0,0,0.2);
+
+$percentage-color: #97a71d;
+$percentage-font-size: 22px;
+$percentage-text-width: 44px;
+
 /* custom */
 /* utility */
 .container {
@@ -63,6 +76,83 @@ $box: #1f4d7d;
   }
   @include pc-lg {
     margin: 0 auto;
+  }
+}
+.radial-progress {
+  width: $circle-size;
+  height: $circle-size;
+  background: $circle-bg;
+  border-radius: 50%;
+  .circle {
+    .mask, .fill {
+      position: absolute;
+      width: $circle-size;
+      height: $circle-size;
+
+      border-radius: 50%;
+
+      transition: -webkit-transform $transition-length;
+      transition: -ms-transform $transition-length;
+      transition: transform $transition-length;
+      -webkit-backface-visibility: hidden;
+    }
+    .mask {
+      clip: rect(0, $circle-size, $circle-size, $circle-size/2);
+      .fill {
+        clip: rect(0, $circle-size/2, $circle-size, 0);
+        background: $circle-color;
+      }
+    }
+    .shadow {
+      width: $circle-size;
+      height: $circle-size;
+      position: absolute;
+      border-radius: 50%;
+      box-shadow: $inset-shadow inset;
+    }
+  }
+  .inset {
+    width: $inset-size;
+    height: $inset-size;
+    position: absolute;
+    margin-left: ($circle-size - $inset-size)/2;
+    margin-top: ($circle-size - $inset-size)/2;
+    background: $inset-color;
+    border-radius: 50%;
+    box-shadow: $inset-shadow;
+    .percentage {
+      width: $percentage-text-width;
+      position: absolute;
+      top: ($inset-size - $percentage-font-size)/2;
+      left: ($inset-size - $percentage-text-width)/2;
+      line-height: 1;
+      text-align: center;
+      font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: $percentage-color;
+      font-weight: 800;
+      font-size: $percentage-font-size;
+    }
+  }
+
+  $increment: 180deg / 100;
+  @for $i from 0 through 100 {
+    &[data-progress="#{$i}"] {
+      .circle {
+        .mask.full, .fill {
+          -webkit-transform: rotate($increment * $i);
+          -ms-transform: rotate($increment * $i);
+          transform: rotate($increment * $i);
+        }
+        .fill.fix {
+          -webkit-transform: rotate($increment * $i * 2);
+          -ms-transform: rotate($increment * $i * 2);
+          transform: rotate($increment * $i * 2);
+        }
+      }
+      .inset .percentage:before {
+        content: "#{$i}%";
+      }
+    }
   }
 }
 
