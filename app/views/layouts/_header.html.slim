@@ -1,7 +1,8 @@
 header.navbar
   div.container
-    = link_to "sample app", '#', id: "logo"
+    nav
+      div.navbar-left
+        = link_to "sample app", '#', class: "logo"
+      ul.nav.navbar-right
+        li = link_to "Home", '#'
 
-  nav
-    ul.nav.navbar-nav.navbar-right
-      li = link_to "Home", '#'
